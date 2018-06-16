@@ -1,0 +1,112 @@
+package com.Lab3;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class RegisterAccount 
+{
+
+	public static void main(String[] args) throws InterruptedException 
+	{
+		// TODO Auto-generated method stub
+		WebDriver driver=new FirefoxDriver();//Example for polymorphism
+		
+		driver.get("http://demo.opencart.com/");
+	    driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+
+		driver.findElement(By.linkText("My Account")).click();//to click my account
+		
+		driver.findElement(By.linkText("Register")).click();
+		Thread.sleep(2000);
+		//First name
+		driver.findElement(By.id("input-firstname")).sendKeys("Kaviya Vidya ");
+		
+		String msg=driver.findElement(By.xpath("//*[@id='input-firstname']")).getText();
+		System.out.println(msg);
+		boolean title1=msg.equals("First Name must be between 1 and 32 characters!");
+		if(title1)
+			System.out.println("Expected Warning Message1 is present");
+		else
+			System.out.println("Expected Warning Message1 is not present");
+		
+		
+		//LastName
+		driver.findElement(By.id("input-lastname")).sendKeys("KKaviya VVidya");
+		String msg1=driver.findElement(By.xpath("//*[@id='input-lastname']")).getText();
+		System.out.println(msg1);
+		boolean title2=msg1.equals("Last Name must be between 1 and 32 characters!");
+		if(title2)
+			System.out.println("Expected Warning Message2 is present");
+		else
+			System.out.println("Expected Warning Message2 is not present");
+		
+		
+		//Email
+		driver.findElement(By.id("input-email")).sendKeys("udhftyuegj@gmail.com");
+	
+		
+		
+		//Telephone
+		driver.findElement(By.id("input-telephone")).sendKeys("546378929086");
+		
+		//password
+		driver.findElement(By.id("input-password")).sendKeys("kaviya123");
+		driver.findElement(By.id("input-confirm")).sendKeys("kaviya123");
+		
+		//checkbox
+		driver.findElement(By.cssSelector("input[type=checkbox]")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.cssSelector("input[type=submit]")).click();
+		Thread.sleep(2000);
+		//driver.findElement(By.linkText("btn btn-primary")).click();
+		String title5=driver.getTitle();
+		boolean titleVerify=driver.getTitle().contains("Your Account Has Been Created!");
+		if(titleVerify)
+			System.out.println("Expected msg is present after accounct creation");
+		else
+			System.out.println("Expected msg is not present after accounct creation");
+		//account will be created and clicking continue button
+		driver.findElement(By.xpath("//*[@id='content']/div/div/a")).click();
+		//driver.findElement(By.linkText("Continue")).click();
+		//Thread.sleep(2000);
+		driver.findElement(By.linkText("View your order history")).click();
+		Thread.sleep(2000);
+		
+		
+		//clicking address book
+		driver.findElement(By.xpath("//*[@id='column-right']/div/a[4]")).click();
+		Thread.sleep(2000);
+		//clicking new address button
+		driver.findElement(By.xpath("//*[@id='content']/div/div[2]/a")).click();
+		Thread.sleep(2000);
+		//entering first and last name
+		driver.findElement(By.xpath(".//*[@id='input-firstname']")).sendKeys("Saraswathi");
+		driver.findElement(By.xpath(".//*[@id='input-lastname']")).sendKeys("vijayan");
+		
+		//entering company
+		driver.findElement(By.id("input-company")).sendKeys("Capgemini");
+		//enetring address 1
+		driver.findElement(By.id("input-address-1")).sendKeys("IGATE");
+		//entering address 2
+		driver.findElement(By.id("input-address-2")).sendKeys("Whitefield");
+		//entering city
+		driver.findElement(By.id("input-city")).sendKeys("Bangalore");
+		//entering postcode
+		driver.findElement(By.id("input-postcode")).sendKeys("560037");
+		//entering country
+		Select drpCountry = new Select(driver.findElement(By.id("input-country")));
+		drpCountry.selectByVisibleText("India");
+		Thread.sleep(2000);
+		Select drpState= new Select(driver.findElement(By.id("input-zone")));
+		drpState.selectByVisibleText("Tamil Nadu");
+		driver.findElement(By.cssSelector("input[type=radio]")).click();
+		driver.findElement(By.cssSelector("input[type=submit]")).click();
+		
+	}
+
+}
